@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diabetes Prediction</title>
+    <title>Diabetic Prediction</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Global styling */
 body {
@@ -139,5 +140,53 @@ h2 {
         <!-- Submit button -->
         <button type="submit" class="submit-btn">Predict</button>
     </form>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+        // Initialize an empty chart
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Urea', 'Creatinine', 'Haemoglobin', 'Cholesterol', 'Triglycerides', 'HDL', 'LDL', 'VLDL', 'BMI'],
+                datasets: [{
+                    label: 'User Data',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0], // Initial empty data
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Handle form submission to update chart data
+        document.getElementById('dataForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form from refreshing the page
+
+            // Collect values from form inputs
+            const urea = parseFloat(document.getElementById('urea').value);
+            const creatinine = parseFloat(document.getElementById('creatinine').value);
+            const haemoglobin = parseFloat(document.getElementById('haemoglobin').value);
+            const cholesterol = parseFloat(document.getElementById('cholesterol').value);
+            const triglycerides = parseFloat(document.getElementById('triglycerides').value);
+            const hdl = parseFloat(document.getElementById('hdl').value);
+            const ldl = parseFloat(document.getElementById('ldl').value);
+            const vldl = parseFloat(document.getElementById('vldl').value);
+            const bmi = parseFloat(document.getElementById('bmi').value);
+
+            // Update chart data with form values
+            chart.data.datasets[0].data = [urea, creatinine, haemoglobin, cholesterol, triglycerides, hdl, ldl, vldl, bmi];
+            chart.update(); // Re-render the chart with new data
+        });
+    </script>
 </body>
 </html>
