@@ -3,17 +3,21 @@ from flask import Flask, request, render_template
 import numpy as np
 import joblib
 
-model= joblib.load("ray.joblib")
+model_dia= joblib.load("ray.joblib")
+model_hype=joblib.load("hgbc_model_for_hypertension.joblib")
 
 app = Flask(__name__, template_folder='templete')
-
 @app.route('/', methods=['GET', 'POST'])
-def Diabetis():
+def home():
+    return render_template('home.html')
+
+@app.route('/diabetes', methods=['GET', 'POST'])
+def Diabetes():
     if request.method == 'POST':
         features = [float(x) for x in request.form.values()]
         array = [np.array(features)]
         
-        pred = model.predict(array)
+        pred = model_dia.predict(array)
         if pred == 0.0:
             prediction = "Diabetic"
         elif pred == 1.0:
@@ -28,13 +32,13 @@ def Diabetis():
     
     # Render the template with the prediction and user input values
     return render_template('index.html')
-@app.route('/',methods=['GET','POST'])
+@app.route('/hypertension',methods=['GET','POST'])
 def Hypertension():
     if request.method == 'POST':
         features = [float(x) for x in request.form.values()]
         array = [np.array(features)]
         
-        pred = model.predict(array)
+        pred = model_hype.predict(array)
         if pred == 0.0:
             prediction = "Diabetic"
         elif pred == 1.0:
@@ -44,6 +48,6 @@ def Hypertension():
         
         # Prepare the data for charting
         
-        return render_template('index.html', prediction=prediction)
+        return render_template('hpe.html', prediction=prediction)
 if __name__ == "__main__":
     app.run(debug=True)
