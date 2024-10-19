@@ -15,25 +15,11 @@ def home():
 
 # Diabetes prediction route
 @app.route('/diabetes', methods=['GET', 'POST'])
-@app.route('/diabetes', methods=['GET', 'POST'])
 def Diabetes():
     if request.method == 'POST':
-        # Fetch values for the 11 features used in diabetes prediction
-        gender = float(request.form['gender'])
-        age = float(request.form['age'])
-        urea = float(request.form['urea'])
-        creatinine = float(request.form['creatinine'])
-        haemoglobin = float(request.form['haemoglobin'])
-        cholesterol = float(request.form['cholesterol'])
-        triglycerides = float(request.form['triglycerides'])
-        high_density = float(request.form['high_density'])
-        low_density = float(request.form['low_density'])
-        very_low_density = float(request.form['very_low_density'])
-        bmi = float(request.form['bmi'])
-
+        features = [float(x) for x in request.form.values()]
         # Create an array for the diabetes model
-        array = np.array([[gender, age, urea, creatinine, haemoglobin, cholesterol, triglycerides, 
-                           high_density, low_density, very_low_density, bmi]])
+        array = np.array(features).reshape(1,-1)
         
         # Make prediction
         pred = model_dia.predict(array)
@@ -56,11 +42,7 @@ def Hypertension():
     if request.method == 'POST':
         features = [float(xx) for xx in request.form.values()]
         
-        # Ensure we have the correct number of features (e.g., 12 for hypertension)
-        if len(features) != 12:  # Adjust this number based on the model's expected input
-            return "Error: The model expects 12 features, but received {}".format(len(features))
-        
-        array = [np.array(features)]
+        array = np.array(features).reshape(1,-1)
         
         pred = model_hype.predict(array)
         if pred == 0.0:
