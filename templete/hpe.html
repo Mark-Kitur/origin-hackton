@@ -1,146 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hypertantion Prediction</title>
-    <style>
-        /* Global styling */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hypertantion Prediction</title>
+<style>
+/* Global styling */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 20px;
+background-color: #f4f4f4;
 }
 
 header {
-    text-align: center;
-    background-color: #0ec2de;
-    padding: 20px;
-    color: white;
-    font-size: 24px;
-    margin-bottom: 20px;
+text-align: center;
+background-color: #0ec2de;
+padding: 20px;
+color: white;
+font-size: 24px;
+margin-bottom: 20px;
 }
 
 h2 {
-    text-align: center;
-    color: #333;
+text-align: center;
+color: #333;
 }
 
 /* Form styling */
 .prediction-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns of equal width */
-    gap: 20px; /* Space between form items */
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+display: grid;
+grid-template-columns: 1fr 1fr; 
+gap: 20px; 
+max-width: 800px;
+margin: 0 auto;
+background-color: white;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Form group styling */
 .form-group {
-    display: flex;
-    flex-direction: column;
+display: flex;
+flex-direction: column;
 }
 
-/* Label styling */
 .form-group label {
-    font-weight: bold;
-    margin-bottom: 8px;
+font-weight: bold;
+margin-bottom: 8px;
 }
 
-/* Input field styling */
 .form-group input {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+padding: 10px;
+font-size: 16px;
+border: 1px solid #ccc;
+border-radius: 4px;
 }
 
-/* Submit button styling */
 .submit-btn {
-    grid-column: span 2; /* Make button span both columns */
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #0ec2de;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
+grid-column: span 2; /* Make button span both columns */
+padding: 10px 20px;
+font-size: 18px;
+background-color: #0ec2de;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+text-align: center;
 }
 
 .submit-btn:hover {
-    background-color: #0ec2de;
+background-color: #0ec2de;
+}
+.recommendations-button {
+    text-align: center; 
+    margin: 20px 0; 
 }
 
-    </style>
+.recommendations-button a {
+    text-decoration: none; /* Remove underline from the link */
+}
+
+.recommendations-button button {
+    background-color: #0073e6; /* Button color */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding around the text */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.recommendations-button button:hover {
+    background-color: #005bb5; /* Darker shade on hover */
+}
+.back-button {
+    text-align: left ; 
+    margin: 20px 0;
+}
+
+.back-button a {
+    text-decoration: none; 
+}
+
+.back-button button {
+    background-color: #ff4d4d; 
+    color: white;
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.back-button button:hover {
+    background-color: #e60000; 
+}
+
+
+</style>
 </head>
 <body>
-    <header>
-        <h1>Hypertantion WEB APP</h1>
-    </header>
+<header>
+<h1>Hypertantion WEB APP</h1>
+</header>
+<div class="recommendations-button">
+    <a href="/reco">
+        <button>Recommendations</button>
+    </a>
+</div>
+<div class="back-button">
+    <a href="javascript:history.back()">
+        <button>Back</button>
+    </a>
+</div>
 
-    <!-- Display prediction result -->
-    {% if prediction is not none %}
-    <h2>Prediction: {{prediction}}</h2>
-    {% endif %}
+<!-- Display prediction result -->
+{% if prediction is not none %}
+<h2>Prediction: {{prediction}}</h2>
+{% endif %}
 
-     Form for entering user data
-    <form method="POST" class="prediction-form">
-        <div class="form-group">
-            <label for="feature2">Male</label>
-            <input type="number" name="feature2" required>
-        </div>
-        <div class="form-group">
-            <label for="feature3">Age</label>
-            <input type="number" name="feature3" required>
-        </div>
-        <div class="form-group">
-            <label for="feature100">Current Smoker</label>
-            <input type="number" name="feature100">
-        </div>
-        <div class="form-group">
-            <label for="feature4">Cigs per day</label>
-            <input type="number" name="feature4" required>
-        </div>
-        <div class="form-group">
-            <label for="feature6">Medication High Blood Pressure</label>
-            <input type="number" name="feature6" required>
-        </div>
-        <div class="form-group">
-            <label for="feature7">Diabetic</label>
-            <input type="number" name="feature7" required>
-        </div>
-        <div class="form-group">
-            <label for="feature8">Cholesterol</label>
-            <input type="number" name="feature8" required>
-        </div>
-        <div class="form-group">
-            <label for="feature9">Systole</label>
-            <input type="number" name="feature9" required>
-        </div>
-        <div class="form-group">
-            <label for="feature10">Diastole</label>
-            <input type="number" name="feature10" required>
-        </div>
-        <div class="form-group">
-            <label for="feature8">Body Mass Index</label>
-            <input type="number" name="feature81" required>
-        </div>
-        <div class="form-group">
-            <label for="feature11">Heart Rate</label>
-            <input type="number" name="feature11" required>
-        </div>
-        <div class="form-group">
-            <label for="feature12">Glucose</label>
-            <input type="number" name="feature12" required>
-        </div>
+Form for entering user data
+ <form method="POST" class="prediction-form">
+    <div class="form-group">
+        <label for="gender">Gender</label>
+        <select name="feature2" required>
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+        </select>
+    </div>
+<div class="form-group">
+    <label for="feature3">Age</label>
+    <input type="number" name="feature3" required>
+</div>
+<div class="form-group">
+    <label for="feature100">Current Smoker</label>
+    <input type="number" name="feature100">
+</div>
+<div class="form-group">
+    <label for="feature4">Cigs per day</label>
+    <input type="number" name="feature4" required>
+</div>
+<div class="form-group">
+    <label for="feature6">Medication High Blood Pressure</label>
+    <input type="number" name="feature6" required>
+</div>
+<div class="form-group">
+    <label for="feature7">Diabetic</label>
+    <input type="number" name="feature7" required>
+</div>
+<div class="form-group">
+    <label for="feature8">Cholesterol</label>
+    <input type="number" name="feature8" required>
+</div>
+<div class="form-group">
+    <label for="feature9">Systole</label>
+    <input type="number" name="feature9" required>
+</div>
+<div class="form-group">
+    <label for="feature10">Diastole</label>
+    <input type="number" name="feature10" required>
+</div>
+<div class="form-group">
+    <label for="feature8">Body Mass Index</label>
+    <input type="number" name="feature81" required>
+</div>
+<div class="form-group">
+    <label for="feature11">Heart Rate</label>
+    <input type="number" name="feature11" required>
+</div>
+<div class="form-group">
+    <label for="feature12">Glucose</label>
+    <input type="number" name="feature12" required>
+</div>
 
-        <button type="submit" class="submit-btn">Predict</button>
-    </form>
+<button type="submit" class="submit-btn">Predict</button>
+</form>
 </body>
 </html> 
